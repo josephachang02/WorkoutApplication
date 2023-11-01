@@ -1,0 +1,15 @@
+const mongoose = require('mongoose');
+
+let connectionString = ``
+
+mongoose.connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+
+//log when connected
+
+mongoose.connection.once('open', () => {
+    console.log('connected to MongoDB Database');
+});
