@@ -5,6 +5,7 @@ import Home from './pages/Home/home';
 import Workout from './pages/Workout/workout';
 import User from './pages/User/user';
 import InitialSign from './components/InitialSign/initialsign';
+import Navbar from './components/Navbar/navbar';
 
 function App() {
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -17,13 +18,7 @@ function App() {
   return (
 <div>
   <h1>Welcome {} to your Personal Workout Page
-  <nav id = "homeNav">
-    <Link to ="/">Home</Link>
-    <Link to ="/workouts">Workout List</Link>
-    <Link to ="/user"onClick={togglePopup}>
-            User
-    </Link>
-  </nav>
+  <Navbar />
   </h1>
   {/* PAGES here */}
   <Routes>
