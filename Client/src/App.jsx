@@ -1,11 +1,18 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { Link, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home/home';
+import Workout from './pages/Workout/workout';
+import User from './pages/User/user';
+import InitialSign from './components/InitialSign/initialsign';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isPopupVisible, setPopupVisible] = useState(false);
+
+  // Function to show/hide the sign-up/sign-in popup
+  const togglePopup = () => {
+    setPopupVisible(!isPopupVisible);
+  };
 
   return (
 <div>
@@ -13,15 +20,20 @@ function App() {
   <nav id = "homeNav">
     <Link to ="/">Home</Link>
     <Link to ="/workouts">Workout List</Link>
-    <Link to ="/user">User</Link>
+    <Link to ="/user"onClick={togglePopup}>
+            User
+    </Link>
   </nav>
+  </h1>
   {/* PAGES here */}
   <Routes>
     <Route path ="/" element={<Home /> } />
     <Route path ="/workouts" element = {<Workout />} />
     <Route path = "/user" element = {<User /> } />
   </Routes>
-  </h1>
+
+  {isPopupVisible && <InitialSign onClose={togglePopup} />}
+
 </div>
   )
 }

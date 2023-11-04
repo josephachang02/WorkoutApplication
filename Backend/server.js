@@ -4,8 +4,8 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 require('dotenv').config();
 require('./config/db.js');
-const Workout = require('./models/workout.js')
-const User = require('./models/user.js')
+const Workout = require('./server/workout.js')
+const User = require('./server/user.js')
 const PORT = 3175;
 
 const app = express();
@@ -55,6 +55,8 @@ app.post('/server/signup', async (req,res) => {
         });
 
 await newUser.save();
+
+
 // You can add user authentication logic here (e.g., JWT)
 
 res.status(201).json({ message: 'User registered successfully' });
