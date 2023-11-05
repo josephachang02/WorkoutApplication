@@ -7,6 +7,7 @@ require('./config/db.js');
 const Workout = require('./server/workout.js')
 const User = require('./server/user.js')
 const PORT = 3175;
+const mongoose = require('mongoose')
 
 const app = express();
 
@@ -95,6 +96,69 @@ app.post('/server/signin', async (req, res) => {
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
+
+  app.get("server/all",async (req,res)=>{
+    const workouts = await Workout.find({}).sort({createdAt :-1})
+    res.status(200).json(workouts)
+})
+
+
+  app.get("server/:id", async(req, res)=>{
+    const { id } = req.params
+    if(!mongoose.Types.ObjectId.isValid()){
+        res.status(404).json({error:"No such workout "})
+    }
+    const workout = await Workout.findById(id)
+
+    if(!workout){
+        return res.status(404).json({error: "No such workout "})
+    }
+    res.status(200).json(workout)
+});
+   
+   app.post("server/create", async (req, res)=>{
+    const {title,  load ,rep } = req.body
+    try{
+        const workout = await Workout.create({title,  load ,rep })
+        res.status(200).json(workout)
+    }catch(error){
+        res.status(404).json({error: error.message})
+    }
+    res.json({"body" : "Post New workout"});
+})
+  
+   app.delete("server/delete/:id", async (req, res)=>{
+    const { id } = req.params
+    if(!mongoose.Types.ObjectId.isValid()){
+        res.status(404).json({error:"No such workout "})
+    }
+
+    const workout = await Workout.findOneAndDelete({_id: id})
+    if(!workout){
+        return res.status(404).json({error: "No such workout "})
+    }
+    res.status(200).json(workout)
+
+})
+  
+   app.update("sever/update/:id", async (req, res)=>{
+    const { id } = req.params
+    if(!mongoose.Types.ObjectId.isValid()){
+        res.status(404).json({error:"No such workout "})
+    }
+    const workout = await Workout.findOneAndReplace({_id: id},{
+        ...req.body
+    })
+    if(!workout){
+        return res.status(404).json({error: "No such workout "})
+    }
+    res.status(200).json(workout)
+   
+
+})
+  
+ 
+
 
 
 

@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import './App.css'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/home';
 import Workout from './pages/Workout/workout';
 import User from './pages/User/user';
 import InitialSign from './components/InitialSign/initialsign';
 import Navbar from './components/Navbar/navbar';
 
+
 function App() {
+
   const [isPopupVisible, setPopupVisible] = useState(false);
 
   // Function to show/hide the sign-up/sign-in popup
@@ -23,7 +25,7 @@ function App() {
   {/* PAGES here */}
   <Routes>
     <Route path ="/" element={<Home /> } />
-    <Route path ="/workouts" element = {<Workout />} />
+    <Route path ="/workout" element = {<Workout />} />
     <Route path = "/user" element = {<User /> } />
   </Routes>
 
