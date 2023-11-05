@@ -4,8 +4,8 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 require('dotenv').config();
 require('./config/db.js');
-const Workout = require('./server/workout.js')
-const User = require('./server/user.js')
+const Workout = require('./models/workout.js')
+const User = require('./models/user.js')
 const PORT = 3175;
 const mongoose = require('mongoose')
 

@@ -5,18 +5,26 @@ const workoutSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    reps: {
-        type: Number,
-        required: true
-    },
-    load: {
-        type: Number,
-        required: true
-    },
-    user_id: {
+// we now incorporate sets and reps into the volume
+    volume: [
+        {
+        set: {
+            type: Number,
+            required: true
+            },
+        reps: {
+            type: Number,
+            required: true
+            }
+        }
+    ],
+// target is an array, that will allow for more than just one body part 
+    target: [
+        {
         type: String,
         required: true
-    }
+        }
+        ],
 },{ timestamps: true
 });
 
