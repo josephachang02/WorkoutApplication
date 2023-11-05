@@ -1,53 +1,44 @@
 import { useContext } from 'react';
-import './index.css';
-import { primaryContext } from "../../context/primaryContext"
 import axios from 'axios';
+import UpdateForm from '../../components/UpdateForm/updateForm';
+import { primaryContext } from '../../components/context/primarycontext';
 
+const WorkoutsDisplay = () => {
+  const { workout, setWorkouts, workoutEdit, setWorkoutEdit } = useContext(primaryContext);
 
-
-const CampsDisplay = () => {
-
-
-  const { workout, setWorkouts, campToEdit, setCampToEdit } = useContext(primaryContext);
-  console.log(camps);
-
-  const handleDelete = (id) => {
-    try{
-      axios({
-        method: "DELETE",
-        url: `/server/camps/${id}`
-      }).then(() => {
-        // just like when we create on the DB, and add it to frontend state
-        // when we delete from DB, we need to remove from frontend state
-        let newCamps = camps.filter((camp) => {
-          return camp._id !== id;
-        })
-        // newCamps is all camps except for the deleted one
-        setCamps(newCamps);
-      })
-
-    } catch (err) {
-      console.error(err)
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/server/workout/${id}`);
+      const newWorkouts = workout.filter((workout) => workout._id !== id);
+      setWorkouts(newWorkouts);
+    } catch (error) {
+      console.error('Error deleting workout:', error);
     }
   }
 
   return (
     <div>
+      {setWorkoutEdit && <UpdateForm workoutEdit={workoutEdit} />}
 
-     {campToEdit &&  <UpdateForm />}
-
-      {camps.map((camp) => {
-        return <div key={camp._id} className="camp">
-          <h3>{camp.name}</h3>
-          <button onClick={() => handleDelete(camp._id)}>DELETE</button>
-          <button onClick={() => setCampToEdit(camp)}>Edit</button>
-          <p>{camp.stateId.name}</p>
-          <p>{camp.price}</p>
-          <p>price after tax: {camp.price*(1+camp.stateId.tax)}</p>
-        </div>
+      {workout.map((workout) => {
+        return (
+          <div key={workout._id} className="workout">
+            <h3>{workout.title}</h3>
+            <button onClick={() => handleDelete(workout._id)}>DELETE</button>
+            <button onClick={() => setWorkoutEdit(workout)}>Edit</button>
+            <p>Volume:</p>
+            {workout.volume.map((exercise, index) => (
+              <p key={index}>{`Set ${index + 1}: ${exercise.set} Reps: ${exercise.reps}`}</p>
+            ))}
+            <p>Target:</p>
+            {workout.target.map((bodyPart, index) => (
+              <p key={index}>{bodyPart}</p>
+            ))}
+          </div>
+        );
       })}
     </div>
-  )
+  );
 }
 
-export default CampsDisplay
+export default WorkoutsDisplay;

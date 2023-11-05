@@ -1,109 +1,161 @@
-import React, { useContext } from 'react'
-import { primaryContext } from '../../context/primaryContext'
+import { useContext, useState } from 'react';
+import { primaryContext } from '../../components/context/primarycontext';
 import axios from 'axios';
 
 const UpdateForm = () => {
+  const { workout, setWorkouts, workoutEdit, setWorkoutEdit } = useContext(primaryContext);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setWorkoutEdit((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-    const { workout, setWorkouts, workoutEdit, setWorkoutEdit, user } = useContext(primaryContext);
- 
+  const handleVolumeChange = (index, key, value) => {
+    // Update the volume array in workoutEdit
+    const updatedVolume = [...workoutEdit.volume];
+    updatedVolume[index][key] = value;
 
-    // submit is different
+    setWorkoutEdit((prevState) => ({
+      ...prevState,
+      volume: updatedVolume,
+    }));
+  };
 
-    // formdata or campToEdi
-    
-    const handleChange = (e) => {
-        const { title, value } = e.target;
-        setWorkoutEdit(prevState => ({
-            ...prevState,
-            [title]: value
-        }));
-    };
+  const handleTargetChange = (index, value) => {
+    // Update the target array in workoutEdit
+    const updatedTarget = [...workoutEdit.target];
+    updatedTarget[index] = value;
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    setWorkoutEdit((prevState) => ({
+      ...prevState,
+      target: updatedTarget,
+    }));
+  };
 
-        // sometimes here stateId is a "223lu123oiu21" and other times it is an object {_id, name, tax}
-        
-        // let campWithFixedId = 
-        // typeof campToEdit.stateId === "string" 
-        // ? campToEdit 
-        // :  {...campToEdit, stateId: campToEdit.stateId._id};
+  const addExercise = () => {
+    // Add a new exercise to the volume array
+    setWorkoutEdit((prevState) => ({
+      ...prevState,
+      volume: [...prevState.volume, { set: '', reps: '' }],
+    }));
+  };
 
+  const addTarget = () => {
+    // Add a new target to the target array
+    setWorkoutEdit((prevState) => ({
+      ...prevState,
+      target: [...prevState.target, ''],
+    }));
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        // console.log(campWithFixedId);
-        let response = await axios({
-            method: "PUT",
-            url: `/server/workout/${workoutEdit._id}`,
-            data: workoutEdit // found in req.body
-        })
-        console.log(response);
+    try {
+      const response = await axios.put(`/server/workout/${workoutEdit._id}`, workoutEdit);
+      console.log(response);
 
-        let NewExercise = workout.map((workout) => {
-            if (workout._id == workoutEdit._id) {
-                return response.data
-            } else {
-                return workout
-            }
-          })
-          user(NewExercise);
-          setWorkoutEdit(null)
-
-        // update fronted state as well!
+      const newWorkouts = workout.map((workoutItem) => {
+        if (workoutItem._id === workoutEdit._id) {
+          return response.data;
+        } else {
+          return workoutItem;
+        }
+      });
+      setWorkouts(newWorkouts);
+      setWorkoutEdit(null);
+    } catch (error) {
+      console.error('Error updating workout:', error);
     }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-    <div>
-        <label htmlFor="stateId">State:</label>
-        <select
-            id="stateId"
-            name="stateId"
-            value={campToEdit.stateId._id}
-            onChange={handleChange}
-        >
-            <option value="" disabled>Select a state</option>
-            {states.map(state => (
-                <option key={state._id} value={state._id}>
-                    {state.name}
-                </option>
-            ))}
-        </select>
-    </div>
-    <div>
-        <label htmlFor="name">Name:</label>
-        <input
-            type="text"
-            id="name"
-            name="name"
-            value={campToEdit.name}
-            onChange={handleChange}
-        />
-    </div>
-    <div>
-        <label htmlFor="price">Price:</label>
-        <input
-            type="number"
-            id="price"
-            name="price"
-            value={campToEdit.price}
-            onChange={handleChange}
-        />
-    </div>
-    <div>
-        <label htmlFor="img">Image URL:</label>
-        <input
-            type="text"
-            id="img"
-            name="img"
-            value={campToEdit.img}
-            onChange={handleChange}
-        />
-    </div>
-    <button type="submit">Submit updates</button>
-</form>
-  )
-}
+      {workoutEdit && ( // Check if workoutEdit is not null
+        <div>
+          <div>
+            <label htmlFor="title">Title:</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={workoutEdit.title}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="volume">Volume:</label>
+            <div>
+              {workoutEdit.volume.map((exercise, index) => (
+                <div key={index}>
+                  <label htmlFor={`volume[${index}].set`}>Set {index + 1}:</label>
+                  <input
+                    type="number"
+                    name={`volume[${index}].set`}
+                    value={exercise.set}
+                    onChange={(e) => handleVolumeChange(index, 'set', e.target.value)}
+                  />
+                  <label htmlFor={`volume[${index}].reps`}>Reps {index + 1}:</label>
+                  <input
+                    type="number"
+                    name={`volume[${index}].reps`}
+                    value={exercise.reps}
+                    onChange={(e) => handleVolumeChange(index, 'reps', e.target.value)}
+                  />
+                </div>
+              ))}
+              <div>
+                <input
+                  type="number"
+                  name="set"
+                  placeholder="Set"
+                  value={workoutEdit.volume.length > 0 ? workoutEdit.volume[workoutEdit.volume.length - 1].set : ''}
+                  onChange={(e) => handleVolumeChange(workoutEdit.volume.length - 1, 'set', e.target.value)}
+                />
+                <input
+                  type="number"
+                  name="reps"
+                  placeholder="Reps"
+                  value={workoutEdit.volume.length > 0 ? workoutEdit.volume[workoutEdit.volume.length - 1].reps : ''}
+                  onChange={(e) => handleVolumeChange(workoutEdit.volume.length - 1, 'reps', e.target.value)}
+                />
+                <button type="button" onClick={addExercise}>Add Exercise</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label htmlFor="target">Target:</label>
+            <div>
+              {workoutEdit.target.map((target, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    name={`target[${index}]`}
+                    value={target}
+                    onChange={(e) => handleTargetChange(index, e.target.value)}
+                  />
+                </div>
+              ))}
+              <div>
+                <input
+                  type="text"
+                  name="target"
+                  placeholder="Target"
+                  value={workoutEdit.target.length > 0 ? workoutEdit.target[workoutEdit.target.length - 1] : ''}
+                  onChange={(e) => handleTargetChange(workoutEdit.target.length - 1, e.target.value)}
+                />
+                <button type="button" onClick={addTarget}>Add Target</button>
+              </div>
+            </div>
+          </div>
+          <button type="submit">Submit updates</button>
+        </div>
+      )}
+    </form>
+  );
+};
 
-export default UpdateForm
+export default UpdateForm;

@@ -23,6 +23,7 @@ app.use((req, res, next) => {
     }
     next();
 })
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // ROUTES 
 app.post('/server/signup', async (req,res) => {
@@ -90,72 +91,100 @@ app.post('/server/signin', async (req, res) => {
     }
   });
   
-  // ... other routes ...
-  
-  const port = process.env.PORT || 3175;
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  app.post('/workouts', async (req, res) => {
+    try {
+      const dbResponse = await Workout.create(req.body);
+      res.status(201).json(dbResponse);
+    } catch (err) {
+      res.status(400).json({ error: 'Error creating workout' });
+    }
   });
-
-  app.get("server/all",async (req,res)=>{
-    const workouts = await Workout.find({}).sort({createdAt :-1})
-    res.status(200).json(workouts)
-})
-
-
-  app.get("server/:id", async(req, res)=>{
-    const { id } = req.params
-    if(!mongoose.Types.ObjectId.isValid()){
-        res.status(404).json({error:"No such workout "})
-    }
-    const workout = await Workout.findById(id)
-
-    if(!workout){
-        return res.status(404).json({error: "No such workout "})
-    }
-    res.status(200).json(workout)
-});
-   
-   app.post("server/create", async (req, res)=>{
-    const {title,  load ,rep } = req.body
-    try{
-        const workout = await Workout.create({title,  load ,rep })
-        res.status(200).json(workout)
-    }catch(error){
-        res.status(404).json({error: error.message})
-    }
-    res.json({"body" : "Post New workout"});
-})
   
-   app.delete("server/delete/:id", async (req, res)=>{
-    const { id } = req.params
-    if(!mongoose.Types.ObjectId.isValid()){
-        res.status(404).json({error:"No such workout "})
+  // Route to get all workouts
+  app.get('/workouts', async (req, res) => {
+    try {
+      const dbResponse = await Workout.find();
+      res.status(200).json(dbResponse);
+    } catch (err) {
+      res.status(400).json({ error: 'Error getting workouts' });
     }
-
-    const workout = await Workout.findOneAndDelete({_id: id})
-    if(!workout){
-        return res.status(404).json({error: "No such workout "})
-    }
-    res.status(200).json(workout)
-
-})
+  });
   
-   app.update("sever/update/:id", async (req, res)=>{
-    const { id } = req.params
-    if(!mongoose.Types.ObjectId.isValid()){
-        res.status(404).json({error:"No such workout "})
+  // Route to update a workout
+  app.put('/workouts/:workoutId', async (req, res) => {
+    try {
+      const dbResponse = await Workout.findByIdAndUpdate(req.params.workoutId, req.body, { new: true });
+      res.status(200).json(dbResponse);
+    } catch (err) {
+      res.status(400).json({ error: 'Error updating workout' });
     }
-    const workout = await Workout.findOneAndReplace({_id: id},{
-        ...req.body
-    })
-    if(!workout){
-        return res.status(404).json({error: "No such workout "})
+  });
+  
+  // Route to delete a workout
+  app.delete('/workouts/:workoutId', async (req, res) => {
+    try {
+      const dbResponse = await Workout.findByIdAndDelete(req.params.workoutId);
+      res.status(200).json(dbResponse);
+    } catch (err) {
+      res.status(400).json({ error: 'Error deleting workout' });
     }
-    res.status(200).json(workout)
-   
-
-})
+  });
+  
+  // Route to get all workouts sorted by createdAt
+  app.get('/', async (req, res) => {
+    const workouts = await Workout.find({}).sort({ createdAt: -1 });
+    res.status(200).json(workouts);
+  });
+  
+  // Route to get a single workout by ID
+  app.get('/workouts/:id', async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'No such workout' });
+    }
+    const workout = await Workout.findById(id);
+    if (!workout) {
+      return res.status(404).json({ error: 'No such workout' });
+    }
+    res.status(200).json(workout);
+  });
+  
+  // Route to create a new workout
+  app.post('/workouts/create', async (req, res) => {
+    const { title, load, rep } = req.body;
+    try {
+      const workout = await Workout.create({ title, load, rep });
+      res.status(200).json(workout);
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  });
+  
+  // Route to delete a workout by ID
+  app.delete('/workouts/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'No such workout' });
+    }
+    const workout = await Workout.findOneAndDelete({ _id: id });
+    if (!workout) {
+      return res.status(404).json({ error: 'No such workout' });
+    }
+    res.status(200).json(workout);
+  });
+  
+  // Route to update a workout by ID
+  app.put('/workouts/update/:id', async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: 'No such workout' });
+    }
+    const workout = await Workout.findOneAndUpdate({ _id: id }, { ...req.body }, { new: true });
+    if (!workout) {
+      return res.status(404).json({ error: 'No such workout' });
+    }
+    res.status(200).json(workout);
+  });
   
  
 
