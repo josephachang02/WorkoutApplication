@@ -7,28 +7,37 @@ const WorkoutForm = () => {
 
   const [formData, setFormData] = useState({
     title: '',
-    volume: [],
-    target: [],
+    set: "",
+    reps: "",
+    target: []
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name==="reps" || name === "set" ) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: +value,
+      }));
+    } else {
+
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
-  const handleVolumeChange = (index, key, value) => {
-    // Update the volume array in formData
-    const updatedVolume = [...formData.volume];
-    updatedVolume[index][key] = value;
+  // const handleVolumeChange = (index, key, value) => {
+  //   // Update the volume array in formData
+  //   const updatedVolume = [...formData.volume];
+  //   updatedVolume[index][key] = value;
 
-    setFormData((prevState) => ({
-      ...prevState,
-      volume: updatedVolume,
-    }));
-  };
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     volume: updatedVolume,
+  //   }));
+  // };
 
   const addExercise = () => {
     // Add a new exercise to the volume array in formData
@@ -48,7 +57,7 @@ const WorkoutForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+console.log(formData);
     try {
       const response = await axios({
         method: 'POST',
@@ -61,7 +70,8 @@ const WorkoutForm = () => {
       // Reset the form data after submission
       setFormData({
         title: '',
-        volume: [],
+        reps: '',
+        sets: '',
         target: [],
       });
     } catch (err) {
@@ -85,25 +95,24 @@ const WorkoutForm = () => {
       <div>
         <label htmlFor="volume">Volume:</label>
         <div>
-          {formData.volume.map((exercise, index) => (
-            <div key={index}>
-              <label htmlFor={`volume[${index}].set`}>Set {index + 1}:</label>
+            <div>
+
               <input
                 type="number"
-                name={`volume[${index}].set`}
-                value={exercise.set}
-                onChange={(e) => handleVolumeChange(index, 'set', e.target.value)}
+                name="set"
+                value={formData.set}
+                onChange={handleChange}
               />
-              <label htmlFor={`volume[${index}].reps`}>Reps {index + 1}:</label>
+              <label htmlFor={`volume[$].reps`}>Reps:</label>
               <input
                 type="number"
-                name={`volume[${index}].reps`}
-                value={exercise.reps}
-                onChange={(e) => handleVolumeChange(index, 'reps', e.target.value)}
+                name="reps"
+                value={formData.reps}
+                onChange={handleChange}
               />
             </div>
-          ))}
-          <button type="button" onClick={addExercise}>Add Exercise</button>
+         
+          {/* <button type="button" onClick={addExercise}>Add Exercise</button> */}
         </div>
       </div>
       <div>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from './components/Navbar/navbar';
 import WorkoutsDisplay from './pages/WorkoutDisplay/workout';
 import WorkoutForm from './pages/Form/form';
+import UpdateForm from './components/UpdateForm/updateForm';
 // import SingleWorkout from './SingleWorkout';
 import { primaryContext } from './components/context/primarycontext';
 
@@ -15,7 +16,7 @@ function App() {
     try {
       axios({
         method: 'GET',
-        url: 'server/workouts', // Adjust the URL to match your backend endpoint for workouts
+        url: '/server', // Adjust the URL to match your backend endpoint for workouts
       }).then((response) => {
         // The workouts data should be in response.data
         setWorkouts(response.data);
@@ -28,9 +29,11 @@ function App() {
   return (
     <div>
       <Navbar />
+      {/* <WorkoutsDisplay /> */}
       <Routes>
         <Route path="/" element={<WorkoutsDisplay />} />
-        <Route path="/workouts/create" element={<WorkoutForm />} />
+        <Route path="/workout/create" element={<WorkoutForm />} />
+        <Route path="/workout/update/:id" element={<UpdateForm />} />
       </Routes>
     </div>
   );

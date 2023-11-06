@@ -5,108 +5,107 @@ const Workout = require('./models/workout.js')
 const workouts = [
     {
         title: "Push-ups",
-        volume: [
+        volume: 
           { set: 3, reps: 15 },
-          { set: 3, reps: 15 },
-        ],
+        
         target: ["Chest", "Triceps"],
       },
       {
         title: "Squats",
-        volume: [
+        volume: 
           { set: 4, reps: 12 },
-        ],
+        
         target: ["Quadriceps", "Hamstrings", "Glutes"],
       },
       {
         title: "Bicep Curls",
-        volume: [
+        volume: 
           { set: 3, reps: 10 },
-        ],
+        
         target: ["Biceps"],
       },
       {
         title: "Plank",
-        volume: [
+        volume: 
           { set: 3, reps: 60 },
-        ],
+        
         target: ["Core"],
       },
       {
         title: "Pull-ups",
-        volume: [
+        volume: 
           { set: 4, reps: 8 },
-        ],
+        
         target: ["Back", "Biceps"],
       },
       {
         title: "Deadlifts",
-        volume: [
+        volume: 
           { set: 5, reps: 5 },
-        ],
+        
         target: ["Lower Back", "Hamstrings", "Glutes"],
       },
       {
         title: "Lunges",
-        volume: [
+        volume: 
           { set: 3, reps: 12 },
-        ],
+        
         target: ["Quadriceps", "Hamstrings", "Glutes"],
       },
       {
         title: "Dumbbell Bench Press",
-        volume: [
+        volume: 
           { set: 4, reps: 10 },
-        ],
+        
         target: ["Chest", "Triceps"],
       },
       {
         title: "Russian Twists",
-        volume: [
+        volume: 
           { set: 3, reps: 20 },
-        ],
+        
         target: ["Core", "Obliques"],
       },
       {
         title: "Lat Pulldowns",
-        volume: [
+        volume: 
           { set: 4, reps: 12 },
-        ],
+        
         target: ["Back", "Biceps"],
       },
       {
         title: "Leg Press",
-        volume: [
+        volume: 
           { set: 4, reps: 12 },
-        ],
+        
         target: ["Quadriceps", "Hamstrings", "Glutes"],
       },
       {
         title: "Shoulder Press",
-        volume: [
+        volume: 
           { set: 3, reps: 8 },
-        ],
+        
         target: ["Shoulders", "Triceps"],
       },
       {
         title: "Plank",
-        volume: [
+        volume: 
           { set: 3, reps: 60 },
-        ],
+        
         target: ["Core"],
       },
       {
         title: "Bicycle Crunches",
-        volume: [
+        volume: 
           { set: 3, reps: 20 },
-        ],
+        
         target: ["Core", "Obliques"],
       },
       {
         title: "Barbell Rows",
-        volume: [
+        volume: 
           { set: 4, reps: 10 },
-        ],
+        
         target: ["Back", "Biceps"],
       },
     ];

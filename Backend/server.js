@@ -18,7 +18,10 @@ app.use(cors({
 }));
 app.use(morgan('dev'));
 app.use(helmet());
+
 app.use((req, res, next) => {
+  console.log(req.path);
+  console.log("doing middleware");
     if (req.path.startsWith("/server")) {
         req.url = req.url.replace('/server', '');
     }
@@ -92,7 +95,7 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 //     }
 //   });
   
-  app.post('/server/workouts', async (req, res) => {
+  app.post('/workout/create', async (req, res) => {
     try {
       const dbResponse = await Workout.create(req.body);
       res.status(201).json(dbResponse);
@@ -102,7 +105,7 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
   });
   
   // Route to get all workouts
-  app.get('server/workouts', async (req, res) => {
+  app.get('/workouts', async (req, res) => {
     try {
       const dbResponse = await Workout.find();
       res.status(200).json(dbResponse);
@@ -111,7 +114,7 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
     }})
   
   // Route to update a workout
-  app.put('/server/workouts/:workoutId', async (req, res) => {
+  app.put('/workout/update/:id', async (req, res) => {
     try {
       const dbResponse = await Workout.findByIdAndUpdate(req.params.workoutId, req.body, { new: true });
       res.status(200).json(dbResponse);
@@ -121,14 +124,14 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
   });
   
   // Route to delete a workout
-  app.delete('/server/workouts/:workoutId', async (req, res) => {
-    try {
-      const dbResponse = await Workout.findByIdAndDelete(req.params.workoutId);
-      res.status(200).json(dbResponse);
-    } catch (err) {
-      res.status(400).json({ error: 'Error deleting workout' });
-    }
-  });
+  // app.delete('/workouts/:workoutId', async (req, res) => {
+  //   try {
+  //     const dbResponse = await Workout.findByIdAndDelete(req.params.workoutId);
+  //     res.status(200).json(dbResponse);
+  //   } catch (err) {
+  //     res.status(400).json({ error: 'Error deleting workout' });
+  //   }
+  // });
   
   // Route to get all workouts sorted by createdAt
   app.get('/', async (req, res) => {
@@ -137,31 +140,36 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
   });
   
   // Route to get a single workout by ID
-  app.get('/server/workouts/:id', async (req, res) => {
-    const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({ error: 'No such workout' });
-    }
-    const workout = await Workout.findById(id);
-    if (!workout) {
-      return res.status(404).json({ error: 'No such workout' });
-    }
-    res.status(200).json(workout);
-  });
+  // app.get('/workouts/:id', async (req, res) => {
+  //   const { id } = req.params;
+  //   if (!mongoose.Types.ObjectId.isValid(id)) {
+  //     return res.status(404).json({ error: 'No such workout' });
+  //   }
+  //   const workout = await Workout.findById(id);
+  //   if (!workout) {
+  //     return res.status(404).json({ error: 'No such workout' });
+  //   }
+  //   res.status(200).json(workout);
+  // // });
+  // app.post("/workouts", (req, res) => {
+  //   console.log("hitting workouts reoute")
+  // })
   
   // Route to create a new workout
-  app.post('/server/workouts/create', async (req, res) => {
-    const { title, load, rep } = req.body;
+  app.post('/workouts', async (req, res) => {
+    console.log("server reached");
     try {
-      const workout = await Workout.create({ title, load, rep });
+      const workout = await Workout.create(req.body);
       res.status(200).json(workout);
     } catch (error) {
       res.status(404).json({ error: error.message });
     }
+    console.log("server reached");
   });
   
+  
   // Route to delete a workout by ID
-  app.delete('/server/workouts/delete/:id', async (req, res) => {
+  app.delete('/workouts/delete/:id', async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: 'No such workout' });
@@ -174,7 +182,7 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
   });
   
   // Route to update a workout by ID
-  app.put('/server/workouts/update/:id', async (req, res) => {
+  app.put('/workouts/update/:id', async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: 'No such workout' });

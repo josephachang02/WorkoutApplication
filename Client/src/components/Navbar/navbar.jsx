@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
+import './index.css'
 
-const navbar = () => {
+const Navbar = () => {
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <Link to="/workout/new">Make your own Exercise</Link>
+    <div className="navbar">
+      <Link to="/">All Workouts</Link>
+      <Link to="/workout/create">Make your own Exercise</Link>
+      <Link to="/workout/update/:id">Update your own Exercise</Link>
       <Link to="/user">User</Link>
     </div>
-  )
-}
+  );
+};
 
-export default navbar
+export default Navbar;
