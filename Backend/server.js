@@ -1,12 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const path = require('path');
 const helmet = require("helmet");
 require('dotenv').config();
 require('./config/db.js');
 const Workout = require('./models/workout.js')
 const User = require('./models/user.js')
-const PORT = 3175;
+const PORT = 5174;
 const mongoose = require('mongoose')
 
 const app = express();
@@ -26,72 +27,72 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // ROUTES 
-app.post('/server/signup', async (req,res) => {
-    const {
-        username,
-        password,
-        name,
-        frequency,
-        goals,
-        levels,
-        favorites,
-    } = req.body;
+// app.post('/server/signup', async (req,res) => {
+//     const {
+//         username,
+//         password,
+//         name,
+//         frequency,
+//         goals,
+//         levels,
+//         favorites,
+//     } = req.body;
 
-    try {
-        // Check if the username already exists
-        const existingUser = await User.findOne({ username });
+//     try {
+//         // Check if the username already exists
+//         const existingUser = await User.findOne({ username });
     
-        if (existingUser) {
-          return res.status(400).json({ message: 'Username already exists' });
-        }
+//         if (existingUser) {
+//           return res.status(400).json({ message: 'Username already exists' });
+//         }
     
-        // Create a new user
-        const newUser = new User({
-          username,
-          password,
-          name,
-          frequency,
-          goals,
-          levels,
-          favorites,
-        });
+//         // Create a new user
+//         const newUser = new User({
+//           username,
+//           password,
+//           name,
+//           frequency,
+//           goals,
+//           levels,
+//           favorites,
+//         });
 
-await newUser.save();
+// await newUser.save();
 
 
 // You can add user authentication logic here (e.g., JWT)
 
-res.status(201).json({ message: 'User registered successfully' });
-} catch (error) {
-console.error(error);
-res.status(500).json({ message: 'Internal server error' });
-}
-});
+// res.status(201).json({ message: 'User registered successfully' });
+// } catch (error) {
+// console.error(error);
+// res.status(500).json({ message: 'Internal server error' });
+// }
+// });
 
 
 // autenticate user (signin)
 
-app.post('/server/signin', async (req, res) => {
-    const { username, password } = req.body;
+// app.post('/server/signin', async (req, res) => {
+//     const { username, password } = req.body;
   
-    try {
-      // Check if the user exists
-      const user = await User.findOne({ username });
+//     try {
+//       // Check if the user exists
+//       const user = await User.findOne({ username });
   
-      if (!user || user.password !== password) {
-        return res.status(401).json({ message: 'Invalid credentials' });
-      }
+//       if (!user || user.password !== password) {
+//         return res.status(401).json({ message: 'Invalid credentials' });
+//       }
   
-      // You can add user authentication logic here (e.g., JWT)
+//       // You can add user authentication logic here (e.g., JWT)
   
-      res.json({ message: 'Sign in successful' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  });
+//       res.json({ message: 'Sign in successful' });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ message: 'Internal server error' });
+//     }
+//   });
   
-  app.post('/workouts', async (req, res) => {
+  app.post('/server/workouts', async (req, res) => {
     try {
       const dbResponse = await Workout.create(req.body);
       res.status(201).json(dbResponse);
@@ -106,12 +107,11 @@ app.post('/server/signin', async (req, res) => {
       const dbResponse = await Workout.find();
       res.status(200).json(dbResponse);
     } catch (err) {
-      res.status(400).json({ error: 'Error getting workouts' });
-    }
-  });
+      res.status(400).json({ error: 'Error getting workouts', title: (err) });
+    }})
   
   // Route to update a workout
-  app.put('/workouts/:workoutId', async (req, res) => {
+  app.put('/server/workouts/:workoutId', async (req, res) => {
     try {
       const dbResponse = await Workout.findByIdAndUpdate(req.params.workoutId, req.body, { new: true });
       res.status(200).json(dbResponse);
@@ -121,7 +121,7 @@ app.post('/server/signin', async (req, res) => {
   });
   
   // Route to delete a workout
-  app.delete('/workouts/:workoutId', async (req, res) => {
+  app.delete('/server/workouts/:workoutId', async (req, res) => {
     try {
       const dbResponse = await Workout.findByIdAndDelete(req.params.workoutId);
       res.status(200).json(dbResponse);
@@ -137,7 +137,7 @@ app.post('/server/signin', async (req, res) => {
   });
   
   // Route to get a single workout by ID
-  app.get('/workouts/:id', async (req, res) => {
+  app.get('/server/workouts/:id', async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: 'No such workout' });
@@ -150,7 +150,7 @@ app.post('/server/signin', async (req, res) => {
   });
   
   // Route to create a new workout
-  app.post('/workouts/create', async (req, res) => {
+  app.post('/server/workouts/create', async (req, res) => {
     const { title, load, rep } = req.body;
     try {
       const workout = await Workout.create({ title, load, rep });
@@ -161,7 +161,7 @@ app.post('/server/signin', async (req, res) => {
   });
   
   // Route to delete a workout by ID
-  app.delete('/workouts/delete/:id', async (req, res) => {
+  app.delete('/server/workouts/delete/:id', async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: 'No such workout' });
@@ -174,7 +174,7 @@ app.post('/server/signin', async (req, res) => {
   });
   
   // Route to update a workout by ID
-  app.put('/workouts/update/:id', async (req, res) => {
+  app.put('/server/workouts/update/:id', async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: 'No such workout' });

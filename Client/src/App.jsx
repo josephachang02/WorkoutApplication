@@ -15,18 +15,19 @@ function App() {
     try {
       axios({
         method: 'GET',
-        url: 'server/workouts', // Adjust the URL to match your backend endpoint for workouts
+        url: '/workouts', // Adjust the URL to match your backend endpoint for workouts
       }).then((response) => {
         // The workouts data should be in response.data
         setWorkouts(response.data);
       });
     } catch (err) {
-      console.error(err);
+      console.error('this is the error' + err);
     }
   }, [setWorkouts]);
 
   return (
     <div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<WorkoutsDisplay />} />
         <Route path="/workouts/create" element={<WorkoutForm />} />

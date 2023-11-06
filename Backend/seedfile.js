@@ -111,9 +111,19 @@ const workouts = [
       },
     ];
 
-const insert = async () => {
-    // dont want to enter all the states twice 
-    await State.deleteMany()
-    await State.insertMany(states);
-} 
-insert()
+const insertWorkouts = async () => {
+        try {
+          await Workout.deleteMany(); // Remove existing data (optional)
+          await Workout.insertMany(workouts); // Insert the workout data
+          console.log('Workouts inserted successfully.');
+        } catch (error) {
+          console.error('Error inserting workouts:', error);
+        }
+    };
+      
+insertWorkouts();
+      
+      
+      
+      
+      
