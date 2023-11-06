@@ -102,7 +102,7 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
   });
   
   // Route to get all workouts
-  app.get('/workouts', async (req, res) => {
+  app.get('server/workouts', async (req, res) => {
     try {
       const dbResponse = await Workout.find();
       res.status(200).json(dbResponse);

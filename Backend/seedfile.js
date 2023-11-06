@@ -111,7 +111,7 @@ const workouts = [
       },
     ];
 
-const insertWorkouts = async () => {
+    const insertWorkouts = async () => {
         try {
           await Workout.deleteMany(); // Remove existing data (optional)
           await Workout.insertMany(workouts); // Insert the workout data
@@ -119,10 +119,9 @@ const insertWorkouts = async () => {
         } catch (error) {
           console.error('Error inserting workouts:', error);
         }
-    };
+      };
       
-insertWorkouts();
-      
+      insertWorkouts(); 
       
       
       

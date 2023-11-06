@@ -15,7 +15,7 @@ function App() {
     try {
       axios({
         method: 'GET',
-        url: '/workouts', // Adjust the URL to match your backend endpoint for workouts
+        url: 'server/workouts', // Adjust the URL to match your backend endpoint for workouts
       }).then((response) => {
         // The workouts data should be in response.data
         setWorkouts(response.data);
