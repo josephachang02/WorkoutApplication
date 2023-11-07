@@ -94,6 +94,17 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 //       res.status(500).json({ message: 'Internal server error' });
 //     }
 //   });
+
+//sign up form 
+app.post('/signup', async (req,res) => {
+  try {
+    const dbResponse = await User.create(req.body);
+    res.status(201).json(dbResponse);
+  } catch (err) {
+    console.error(err); // Log the error to the console for debugging
+    res.status(400).json({ error: 'Error creating User' });
+  }
+});
   
   app.post('/workout/create', async (req, res) => {
     try {
@@ -134,7 +145,7 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
   // });
   
   // Route to get all workouts sorted by createdAt
-  app.get('/', async (req, res) => {
+  app.get('/workoutsDisplay', async (req, res) => {
     const workouts = await Workout.find({}).sort({ createdAt: -1 });
     res.status(200).json(workouts);
   });

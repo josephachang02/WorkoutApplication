@@ -27,18 +27,14 @@ const WorkoutsDisplay = () => {
             <h3>{workout.title}</h3>
             <button onClick={() => handleDelete(workout._id)}>DELETE</button>
             <button onClick={() => setWorkoutEdit(workout)}>Edit</button>
-            <p>Volume:</p>
-            
-              <p>{`Set: ${workout.volume.set} Reps: ${workout.volume.reps}`}</p>
-            <p>Target:</p>
-            {workout.target.map((bodyPart, index) => (
-              <p key={index}>{bodyPart}</p>
-            ))}
-          </div>
-        );
-      })}
-    </div>
-  );
+              <p>{`Set: ${workout.set}`}</p> 
+              <p>{`Reps: ${workout.reps}`}</p>
+          <p>Target: {workout.target.join(', ')}</p>
+        </div>
+      );
+    })}
+  </div>
+);
 }
 
 export default WorkoutsDisplay;

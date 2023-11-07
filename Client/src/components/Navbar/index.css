@@ -1,23 +1,51 @@
 .navbar {
-    background-color: #333;
-    padding: 10px 0; /* Add padding to the top and bottom for height */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; /* Make it fill the entire width of the page */
-  }
-  
-  .navbar a {
-    text-decoration: none;
-    color: #fff;
-    padding: 10px 20px;
-    border: 2px solid #fff;
-    border-radius: 5px;
-    margin-right: 10px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .navbar a:hover {
-    background-color: #fff;
-    color: #333;
-  }
+  background-color: #333;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-left a {
+  text-decoration: none;
+  color: #fff;
+  padding: 10px 20px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-left: 10px;
+}
+
+.nav-left a:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right a {
+  text-decoration: none;
+  color: #fff;
+  padding: 10px 20px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-right a:hover {
+  background-color: #fff;
+  color: #333;
+}

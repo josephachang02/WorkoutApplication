@@ -6,10 +6,14 @@ const userSchema = new mongoose.Schema({
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     name: {type: String, required: true},
-    frequency: {type: String, required: true},
-    goals: {type: String, required: true},
-    levels: {type: String, required: true},
-    favorites: {type: String, required: true}
+    frequency: {type: String},
+    goals: {type: String},
+    levels: {type: String},
+    favorites: [
+        {
+        type: String,
+        }
+        ],
 }, 
 { timestamps: true,
 })

@@ -96,7 +96,7 @@ console.log(formData);
         <label htmlFor="volume">Volume:</label>
         <div>
             <div>
-
+            <label htmlFor={`volume[$].sets`}>Sets:</label>
               <input
                 type="number"
                 name="set"
@@ -135,7 +135,7 @@ console.log(formData);
               />
             </div>
           ))}
-          <button type="button" onClick={addTarget}>Add Target</button>
+          <button type="button" onClick={addTarget}>Add an additional target muscle</button>
         </div>
       </div>
       <button type="submit">Create Workout</button>

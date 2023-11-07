@@ -8,7 +8,7 @@ export const primaryContext = createContext();
 const PrimaryProvider = ({children}) => {
 
     const [workouts, setWorkouts] = useState([]);
-    // const [user, setUser] = useState([]);
+    const [user, setUser] = useState([]);
     const [workoutEdit, setWorkoutEdit] = useState(null);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const PrimaryProvider = ({children}) => {
     }, [])
     // return provider div
     return (
-        <primaryContext.Provider value={{ workouts, setWorkouts, workoutEdit, setWorkoutEdit }}>
+        <primaryContext.Provider value={{ workouts, setWorkouts, workoutEdit, setWorkoutEdit, user, setUser }}>
           {children}
         </primaryContext.Provider>
       );
