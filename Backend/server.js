@@ -7,7 +7,7 @@ require('dotenv').config();
 require('./config/db.js');
 const Workout = require('./models/workout.js')
 const User = require('./models/user.js')
-const PORT = 5174;
+const PORT = 3174;
 const mongoose = require('mongoose')
 
 const app = express();

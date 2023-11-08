@@ -12,11 +12,10 @@ const Navbar = () => {
       <Link to="/workoutsDisplay">All Workouts</Link>
       <Link to="/workout/create">Make your own Exercise</Link>
       <Link to="/workout/update/:id">Update your own Exercise</Link>
-      <Link to="/user">{user.username ? (
+      {/* <Link to="/user">{user.username ? (
   <span>Welcome, {user.name}</span>
-) : (
-  <span>Welcome, Guest</span>
-)}</Link>
+) : ( */}
+  {/* <span>Welcome, Guest</span></Link> */}
     </div>
     <div className='nav-right'>
       <Link to="/signin">User Login</Link>
