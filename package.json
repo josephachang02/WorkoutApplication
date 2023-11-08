@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "servers": "concurrently \"cd Backend && nodemon server.js\" \"cd Client && npm run dev\"  ",
     "start": "node ./Backend/server.js",
-    "build": "npm run build"
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",

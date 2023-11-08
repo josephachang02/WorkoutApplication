@@ -8,6 +8,8 @@ import { primaryContext } from '../../components/context/primarycontext';
 const WorkoutsDisplay = () => {
   const { workouts, setWorkouts, workoutEdit, setWorkoutEdit, userFavorites, setUserFavorites } = useContext(primaryContext);
 
+  //changes
+  
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/server/workout/${id}`);
