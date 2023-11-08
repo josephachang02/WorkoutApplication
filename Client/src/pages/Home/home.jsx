@@ -4,7 +4,7 @@ const home = () => {
   return (
     <div>
         <h1>Welcome 
-            {/* {`${User.name}, `} */}
+             {/* {`${User.name}, `} */}
             to your own personal workout application</h1>
         <h3>To begin the first step of progressing towards your own physical health, log in or sign up here</h3>
         <br></br>

@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import axios from 'axios';
 import { primaryContext } from '../../components/context/primarycontext';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import "./index.css"
 
 const SignUpForm = () => {

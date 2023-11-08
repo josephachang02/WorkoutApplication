@@ -1,0 +1,63 @@
+.workout-list {
+    max-height: 100vh; /* Adjust for the height of the navbar */
+    /* overflow-y: auto; */
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 200px;
+
+  }
+  
+  /* Individual workout item */
+  .workout {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    width: 300px; /* Adjust the width as needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .workout h3 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .workout p {
+    margin: 8px 0;
+  }
+  
+  .workout button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  /* Style the 'Edit' button separately if needed */
+  .workout button.edit-button {
+    background-color: #007bff;
+  }
+  
+  /* Style the 'DELETE' button separately if needed */
+  .workout button.delete-button {
+    background-color: #ff0000;
+  }
+  
+  /* Add hover effect to buttons */
+  .workout button:hover {
+    opacity: 0.8;
+  }
+
+  .favorite-icon {
+    cursor: pointer; /* Add a pointer cursor to indicate interactivity */
+  }
+  
+  .favorite-icon:active,
+  .favorite-icon:focus {
+    color: red !important; /* Override the default color to red when clicked or focused */
+  }

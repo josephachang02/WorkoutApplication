@@ -42,7 +42,7 @@ form {
   
   /* Style for error or success messages */
   p {
-    color: #FF0000; /* Red for error messages */
+    /* color: #FF0000; Red for error messages */
     margin-top: 10px;
     font-weight: bold;
   }

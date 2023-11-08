@@ -10,6 +10,7 @@ const PrimaryProvider = ({children}) => {
     const [workouts, setWorkouts] = useState([]);
     const [user, setUser] = useState([]);
     const [workoutEdit, setWorkoutEdit] = useState(null);
+    const [userFavorites, setUserFavorites] = useState([]);
 
     useEffect(() => {
       axios({ 
@@ -24,7 +25,7 @@ const PrimaryProvider = ({children}) => {
     }, [])
     // return provider div
     return (
-        <primaryContext.Provider value={{ workouts, setWorkouts, workoutEdit, setWorkoutEdit, user, setUser }}>
+        <primaryContext.Provider value={{ workouts, setWorkouts, workoutEdit, setWorkoutEdit, user, setUser, userFavorites, setUserFavorites }}>
           {children}
         </primaryContext.Provider>
       );
