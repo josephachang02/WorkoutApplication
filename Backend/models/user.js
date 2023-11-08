@@ -18,5 +18,24 @@ const userSchema = new mongoose.Schema({
 { timestamps: true,
 })
 
+userSchema.statics.verifyUserCredentials = async function (username, password) {
+    const user = await this.findOne({ username });
+  
+    if (!user) {
+      // User with the provided username not found
+      return null;
+    }
+  
+    const passwordMatch = await bcrypt.compare(password, user.password);
+  
+    if (!passwordMatch) {
+      // Password does not match
+      return null;
+    }
+  
+    // Both username and password are correct
+    return user;
+  };
+
 const User = mongoose.model('User', userSchema)
 module.exports = User;

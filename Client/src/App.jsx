@@ -9,6 +9,7 @@ import SignUpForm from './pages/Signup/signup';
 import UpdateForm from './components/UpdateForm/updateForm';
 // import SingleWorkout from './SingleWorkout';
 import { primaryContext } from './components/context/primarycontext';
+import SignInForm from './pages/SignIn';
 
 function App() {
   const { setWorkouts } = useContext(primaryContext);
@@ -38,6 +39,7 @@ function App() {
         <Route path="/workout/create" element={<WorkoutForm />} />
         <Route path="/workout/update/:id" element={<UpdateForm />} />
         <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/signin" element={<SignInForm />} />
       </Routes>
     </div>
   );

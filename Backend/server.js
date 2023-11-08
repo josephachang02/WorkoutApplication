@@ -105,7 +105,28 @@ app.post('/signup', async (req,res) => {
     res.status(400).json({ error: 'Error creating User' });
   }
 });
-  
+
+// sign in 
+app.post('/signin', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const user = await User.verifyUserCredentials(username, password);
+
+    if (!user) {
+      // Invalid username or password
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Sign-in successful
+    // Return the user data
+    return res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
   app.post('/workout/create', async (req, res) => {
     try {
       const dbResponse = await Workout.create(req.body);
