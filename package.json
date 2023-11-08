@@ -5,9 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "servers": "concurrently \"cd Backend && nodemon server.js\" \"cd Client && npm run dev\"  "
+    "servers": "concurrently \"cd Backend && nodemon server.js\" \"cd Client && npm run dev\"  ",
+    "start": "server.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "build": "^0.1.4",
+    "yarn": "^1.22.19"
+  }
 }
