@@ -32,3 +32,8 @@ This would be a good opportunity to also integrate the project with a UI/UX frie
 
 Have a link to your hosted working app
 
+https://www.youtube.com/watch?v=Q_3lXJ0agwI
+
+im having a lot of difficulties trying to host my website onto render. 
+
+
