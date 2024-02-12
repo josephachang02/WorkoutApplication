@@ -47,8 +47,8 @@ const WorkoutsDisplay = () => {
                 onClick={() => addToFavorites(workout)}
                 color="action"
               /></h3>
-            <button onClick={() => handleDelete(workout._id)}>DELETE</button>
-            <button onClick={() => setWorkoutEdit(workout)}>Edit</button>
+            <button className='Delete' onClick={() => handleDelete(workout._id)}>DELETE</button>
+            <button className='Edit'onClick={() => setWorkoutEdit(workout)}>Edit</button>
               <p>{`Set: ${workout.set}`}</p> 
               <p>{`Reps: ${workout.reps}`}</p>
           <p>Target: {workout.target.join(', ')}</p>

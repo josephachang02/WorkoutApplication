@@ -28,7 +28,7 @@
     margin: 8px 0;
   }
   
-  .workout button {
+  /* .workout button {
     background-color: #333;
     color: #fff;
     border: none;
@@ -36,8 +36,24 @@
     border-radius: 3px;
     cursor: pointer;
     margin-right: 5px;
+  } */
+  .Delete {
+    background-color: #ba0606; /* Red background */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Adjust padding */
+    cursor: pointer; /* Show pointer cursor */
+    border-radius: 5px; /* Add border radius */
   }
   
+  .Edit {
+    background-color: #2273c9; /* Blue background */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Adjust padding */
+    cursor: pointer; /* Show pointer cursor */
+    border-radius: 5px; /* Add border radius */
+  }
   /* Style the 'Edit' button separately if needed */
   .workout button.edit-button {
     background-color: #007bff;
